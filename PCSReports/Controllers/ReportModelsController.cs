@@ -42,7 +42,23 @@ namespace PCSReports.Controllers
         // GET: ReportModels/Create
         public ActionResult Create()
         {
-            return View();
+            ReportViewModel vm = new ReportViewModel();
+            ReportService2005.ReportingService2005 rs = new ReportService2005.ReportingService2005();
+            ReportService2005.CatalogItem[] items = rs.ListChildren("/", true);
+            List<SelectListItem> slItems = new List<SelectListItem>();
+            foreach(ReportService2005.CatalogItem item in items)
+            {
+                if(item.Type==ReportService2005.ItemTypeEnum.Report || item.Type==ReportService2005.ItemTypeEnum.LinkedReport)
+                {
+                    SelectListItem sli = new SelectListItem();
+                    sli.Value = item.Path;
+                    sli.Text = item.Name + " || " + item.Path;
+                    slItems.Add(sli);
+                }
+            }
+            SelectList sl = new SelectList(slItems);
+            vm.lsReports = sl;
+            return View(vm);
         }
 
         // POST: ReportModels/Create

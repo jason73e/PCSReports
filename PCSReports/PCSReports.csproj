@@ -437,6 +437,7 @@
     <Content Include="Views\Manage\DeleteRole.cshtml" />
     <Content Include="Views\Manage\UserRoles.cshtml" />
     <Content Include="Views\Report\ViewReport.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <None Include="Web References\ReportExecution2005\ReportExecution2005.wsdl" />
     <Content Include="Web References\ReportExecution2005\Warning.datasource">
       <DependentUpon>Reference.map</DependentUpon>

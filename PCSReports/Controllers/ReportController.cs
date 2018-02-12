@@ -44,6 +44,22 @@ namespace PCSReports.Controllers
             reportingService.Timeout = Convert.ToInt32(ConfigurationManager.AppSettings["SOAPTimeout"].ToString());
             reportingService.Url = ConfigurationManager.AppSettings["webServiceURL"].ToString();
             vm.lsrp = reportingService.GetReportParameters(vm.rm.path, null, true, rp, dsc);
+            vm.lsrped = new ReportParameterExtraData[vm.lsrp.Length];
+            for (int x = 0; x < vm.lsrp.Length; x++)
+            {
+                if(vm.lsrp[x].ValidValues!=null)
+                {
+                    List<SelectListItem> items = new List<SelectListItem>();
+                    foreach(ValidValue v in vm.lsrp[x].ValidValues)
+                    {
+                        SelectListItem item = new SelectListItem();
+                        item.Text = v.Label;
+                        item.Value = v.Value;
+                        items.Add(item);
+                    }
+                    vm.lsrped[x].lsVVSL = items;
+                }
+            }
             return View(vm);
         }
 

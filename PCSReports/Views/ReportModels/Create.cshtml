@@ -1,10 +1,10 @@
-﻿@model PCSReports.Models.ReportModel
+﻿@model PCSReports.Models.ReportViewModel
 
 @{
     ViewBag.Title = "Add Report";
 }
 
-<h2>Add Report</h2>
+<h2>Add Report From Reporting Server</h2>
 
 
 @using (Html.BeginForm()) 
@@ -18,26 +18,26 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Report",htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model =>model.rm.path,Model.Reports,"<-- Select Report-->" , htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.ValidationMessageFor(model => model.rm.name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.rm.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.rm.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.rm.description, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.path, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.rm.path, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.path, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.path, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.rm.path, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.rm.path, "", new { @class = "text-danger" })
             </div>
         </div>
 

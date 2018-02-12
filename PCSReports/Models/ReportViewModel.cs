@@ -11,9 +11,17 @@ namespace PCSReports.Models
     {
         public ReportModel rm { get; set; }
         public ReportParameter[] lsrp { get; set; }
+        public ReportParameterExtraData[] lsrped { get; set; }
 
         public SelectList lsOuputs { get; set; }
 
         public string sOutputType { get; set; }
+
+        public SelectList lsReports { get; set; }
+    }
+
+    public class ReportParameterExtraData
+    {
+        public List<SelectListItem> lsVVSL { get; set; }
     }
 }
