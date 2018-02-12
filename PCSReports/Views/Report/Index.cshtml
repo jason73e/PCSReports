@@ -1,0 +1,32 @@
+﻿@model PCSReports.Models.ReportUserViewModel
+
+@{
+    ViewBag.Title = "Report List";
+}
+
+<h2>Report List</h2>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lsReportsForUser.FirstOrDefault().name)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.lsReportsForUser)
+        {
+            <tr>
+                <td>
+                    <img src="~/Content/Images/report.jpg" />
+                </td>
+                <td>
+                    @Html.ActionLink(item.name, "ViewReport", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

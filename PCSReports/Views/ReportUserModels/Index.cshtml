@@ -1,0 +1,43 @@
+﻿@model PCSReports.Models.ReportUserViewModel
+
+@{
+    ViewBag.Title = "Report Users";
+}
+
+<h2>Report User List</h2>
+
+<p>
+    @Html.ActionLink("Add User Reports", "Create")
+</p>
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.reportUser.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reportUser.ReportID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reportUser.isActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.lsReportUsers) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Model.lsReports.FirstOrDefault(rt => rt.Value == item.ReportID.ToString()).Text.ToString()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isActive)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

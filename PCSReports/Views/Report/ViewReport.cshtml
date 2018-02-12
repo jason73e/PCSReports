@@ -1,0 +1,52 @@
+﻿@model PCSReports.Models.ReportViewModel
+
+@{
+    ViewBag.Title = Model.rm.name;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+
+    <table class="table">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @{
+            int icnt = -1;
+            <tr>
+            @foreach (var item in Model.lsrp)
+            {
+                icnt++;
+                if (item.PromptUser)
+                {
+                    <td><label class="control-label">@item.Prompt</label></td>
+                    <td>Test</td>
+                }
+                if(icnt>0 && icnt%4==0)
+                {
+                    </tr><tr>
+                }
+            }
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td align="right">
+                <label class="control-label">Output Format:</label>
+            </td>
+            <td align="left">
+                @Html.DropDownListFor(model => model.sOutputType, Model.lsOuputs, "<-Select Format->", htmlAttributes: new { @class = "form-control" })
+            </td>
+            <td><input type="submit" value="Generate Report" class="btn btn-primary" /></td>
+        </tr>
+    </table>
+}
