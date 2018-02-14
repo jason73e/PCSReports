@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -124,5 +126,33 @@ namespace PCSReports.Models
 
             return new MvcHtmlString(output.ToString());
         }
+
+        public static SelectList GetReportsDDL()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            ReportService2005.ReportingService2005 rs = new ReportService2005.ReportingService2005();
+            rs.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["userName"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
+            rs.Timeout = Convert.ToInt32(ConfigurationManager.AppSettings["SOAPTimeout"].ToString());
+            rs.Url = ConfigurationManager.AppSettings["webServiceURL"].ToString();
+            ReportService2005.CatalogItem[] items = rs.ListChildren("/", true);
+            List<SelectListItem> slItems = new List<SelectListItem>();
+            foreach (ReportService2005.CatalogItem item in items)
+            {
+                if (item.Type == ReportService2005.ItemTypeEnum.Report || item.Type == ReportService2005.ItemTypeEnum.LinkedReport)
+                {
+                    if (!db.ReportModels.Where(x => x.path == item.Path).Any())
+                    {
+                        SelectListItem sli = new SelectListItem();
+                        sli.Value = item.Path;
+                        sli.Text = item.Name + " || " + item.Path;
+                        slItems.Add(sli);
+                    }
+                }
+            }
+            SelectList sl = new SelectList(slItems, "Value", "Text");
+            return sl;
+        }
+
     }
 }

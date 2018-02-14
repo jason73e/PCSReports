@@ -22,7 +22,7 @@ namespace PCSReports.Controllers
             return View(vm);
         }
 
-        // GET: Report/Details/5
+        // GET: Report/ViewReport/5
         public ActionResult ViewReport(int? id)
         {
             ReportViewModel vm = new ReportViewModel();
@@ -57,27 +57,16 @@ namespace PCSReports.Controllers
                         item.Value = v.Value;
                         items.Add(item);
                     }
+                    vm.lsrped[x] = new ReportParameterExtraData();
                     vm.lsrped[x].lsVVSL = items;
                 }
             }
             return View(vm);
         }
 
-        // GET: Report/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Report/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Report/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult ViewReport(FormCollection collection)
         {
             try
             {
@@ -91,48 +80,5 @@ namespace PCSReports.Controllers
             }
         }
 
-        // GET: Report/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Report/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Report/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Report/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

@@ -33,5 +33,8 @@ namespace PCSReports.Models
         public System.Data.Entity.DbSet<PCSReports.Models.ReportModel> ReportModels { get; set; }
 
         public System.Data.Entity.DbSet<PCSReports.Models.ReportUserModel> ReportUserModels { get; set; }
+
+        public System.Data.Entity.DbSet<PCSReports.Models.PortalMenusModel> PortalMenusModels { get; set; }
+
     }
 }

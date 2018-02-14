@@ -23,47 +23,55 @@
         @{
             int icnt = -1;
             string sDefaultValue = string.Empty;
-            @foreach (var item in Model.lsrp)
-            {
-        <tr>
-            @icnt++;
-            @if (item.DefaultValues != null)
-            {
-                sDefaultValue = item.DefaultValues[0];
-            }
-            @if (sDefaultValue == null)
-            {
-                sDefaultValue = string.Empty;
-            }
+        }
+        @foreach (var item in Model.lsrp)
+        {
+            icnt = icnt + 1;
+            <tr>
+                @if (item.DefaultValues != null)
+                {
+                    sDefaultValue = item.DefaultValues[0];
+                }
+                @if (sDefaultValue == null)
+                {
+                    sDefaultValue = string.Empty;
+                }
 
-            @if (item.PromptUser)
-            {
-        <td><label class="control-label">@item.Prompt</label></td>
-                if (item.ValidValues != null)
+                @if (item.PromptUser)
                 {
-        <td colspan="3">
-            @Html.DropDownList("opjPram" + icnt.ToString(), Model.lsrped[icnt].lsVVSL, "<-- Select -->", htmlAttributes: new { @class = "form-control" })
-        </td>
-                }
-                else
-                {
-                    if (item.Type == PCSReports.ReportService2005.ParameterTypeEnum.Boolean)
+                    <td><label class="control-label">@item.Prompt</label></td>
+                    if (item.ValidValues != null)
                     {
-        <td colspan="3">
-            @Html.CheckBox("opjPram" + icnt.ToString(), Convert.ToBoolean(sDefaultValue), htmlAttributes: new { @class = "form-control" })
-        </td>
+                        <td colspan="3">
+                            @Html.DropDownList("objParam" + icnt.ToString(), Model.lsrped[icnt].lsVVSL, "<-- Select -->", htmlAttributes: new { @class = "form-control" })
+                        </td>
                     }
-                    else if (item.Type == PCSReports.ReportService2005.ParameterTypeEnum.DateTime)
+                    else
                     {
-        <td colspan="3">
-            @Html.Editor("opjPram" + icnt.ToString(), "DateTime");
-        </td>
+                        if (item.Type == PCSReports.ReportService2005.ParameterTypeEnum.Boolean)
+                        {
+                            <td colspan="3">
+                                @Html.CheckBox("objParam" + icnt.ToString(), Convert.ToBoolean(sDefaultValue), htmlAttributes: new { @class = "form-control" })
+                            </td>
+                        }
+                        else if (item.Type == PCSReports.ReportService2005.ParameterTypeEnum.DateTime)
+                        {
+                            <td colspan="3">
+                                @Html.Editor("objParam" + icnt.ToString(), "DateTime")
+                            </td>
+                        }
+                        else
+                        {
+                            <td colspan="3">
+                                @Html.TextBox("objParam" + icnt.ToString(),string.Empty, htmlAttributes: new { @class = "form-control" })
+                            </td>
+                        }
                     }
                 }
-            }
-        </tr>
-            }
-            }
+            </tr>
+        }
+
+
         <tr>
             <td></td>
             <td align="right">
