@@ -74,7 +74,25 @@ namespace PCSReports.Controllers
         }
 
         //
+        // GET: /Manage/Users
+        [Authorize(Roles = "Admin")]
+        [Audit]
+        public ActionResult Users()
+        {
+            ManageUsersViewModel usersViewModel = new ManageUsersViewModel();
+            List<ApplicationUser> lsUsers = new List<ApplicationUser>();
+            if (db.Users.Any())
+            {
+                lsUsers = db.Users.ToList();
+            }
+            usersViewModel.AllUsers = lsUsers;
+            return View(usersViewModel);
+        }
+
+        //
         // GET: /Manage/Roles
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Roles()
         {
             ManageRolesViewModel rolesViewModel = new ManageRolesViewModel();
@@ -88,6 +106,7 @@ namespace PCSReports.Controllers
         }
 
         [OutputCache(NoStore = true, Duration = 0)]
+        [Authorize(Roles = "Admin")]
         public JsonResult FillRole(string username)
         {
             ManageRolesViewModel rolesViewModel = new ManageRolesViewModel();
@@ -117,6 +136,8 @@ namespace PCSReports.Controllers
 
         //
         // GET: /Manage/UserRoles
+        [Audit]
+        [Authorize(Roles = "Admin")]
         public ActionResult UserRoles()
         {
             ManageRolesViewModel rolesViewModel = new ManageRolesViewModel();
@@ -142,6 +163,8 @@ namespace PCSReports.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult UserRoles(ManageRolesViewModel rolesViewModel)
         {
             string sp = Request.Form["chklistitem"];
@@ -159,6 +182,8 @@ namespace PCSReports.Controllers
             return RedirectToAction("UserRoles");
         }
 
+        [Authorize(Roles = "Admin")]
+        [Audit]
         private void AddRolesForUser(string sUserName, List<string> lsRoleIDs)
         {
             IdentityUser user = UserManager.FindByName(sUserName);
@@ -168,6 +193,8 @@ namespace PCSReports.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [Audit]
         private void RemoveRolesForUser(string sUserName)
         {
             IdentityUser user = UserManager.FindByName(sUserName);
@@ -181,6 +208,8 @@ namespace PCSReports.Controllers
 
         //
         // GET: /Manage/AddRole
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult AddRole()
         {
             return View();
@@ -191,6 +220,8 @@ namespace PCSReports.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult AddRole(ManageRolesViewModel rolesViewModel)
         {
             if (ModelState.IsValid)
@@ -222,6 +253,8 @@ namespace PCSReports.Controllers
 
         //
         // GET: /Manage/DeleteRole/5
+        [Audit]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteRole(Guid? id)
         {
             if (id == null)
@@ -241,6 +274,8 @@ namespace PCSReports.Controllers
         // POST: ReportModels/Delete/5
         [HttpPost, ActionName("DeleteRole")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult DeleteRoleConfirmed(Guid id)
         {
             IdentityRole role = db.Roles.Where(x => x.Id == id.ToString()).SingleOrDefault();
@@ -249,6 +284,38 @@ namespace PCSReports.Controllers
             return RedirectToAction("Roles");
         }
 
+        //
+        // GET: /Manage/DeleteUser/5
+        [Authorize(Roles = "Admin")]
+        [Audit]
+        public ActionResult DeleteUser(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Where(x => x.Id == id.ToString()).SingleOrDefault();
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            ManageUsersViewModel usersViewModel = new ManageUsersViewModel();
+            usersViewModel.user = user;
+            return View(usersViewModel);
+        }
+
+        // POST: ReportModels/Delete/5
+        [HttpPost, ActionName("DeleteUser")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
+        public ActionResult DeleteUserConfirmed(Guid id)
+        {
+            ApplicationUser user = db.Users.Where(x => x.Id == id.ToString()).SingleOrDefault();
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Users");
+        }
         //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
@@ -312,6 +379,42 @@ namespace PCSReports.Controllers
             return View(model);
         }
 
+
+        //
+        // GET: /Manage/SetUserPassword
+        [Authorize(Roles = "Admin")]
+        [Audit]
+        public ActionResult SetUserPassword(string UserName)
+        {
+            SetUserPasswordViewModel vm = new SetUserPasswordViewModel();
+            vm.slUsers = Utility.GetUsers();
+            vm.UserName = UserName;
+            return View(vm);
+        }
+
+        //
+        // POST: /Manage/SetUserPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
+        public async Task<ActionResult> SetUserPassword(SetUserPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = UserManager.FindByName(model.UserName);
+                string sToken = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var result = await UserManager.ResetPasswordAsync(user.Id, sToken, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Users", new { Message = ManageMessageId.SetPasswordSuccess });
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {

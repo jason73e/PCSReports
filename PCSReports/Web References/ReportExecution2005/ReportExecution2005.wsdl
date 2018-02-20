@@ -1880,10 +1880,10 @@
   <wsdl:service name="ReportExecutionService">
     <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">The Reporting Services Execution Service enables report execution</wsdl:documentation>
     <wsdl:port name="ReportExecutionServiceSoap" binding="tns:ReportExecutionServiceSoap">
-      <soap:address location="http://dcap-sql-uhg01:80/ReportServer/ReportExecution2005.asmx" />
+      <soap:address location="http://dcap-sql-uhg01.lason.com:80/ReportServer/ReportExecution2005.asmx" />
     </wsdl:port>
     <wsdl:port name="ReportExecutionServiceSoap12" binding="tns:ReportExecutionServiceSoap12">
-      <soap12:address location="http://dcap-sql-uhg01:80/ReportServer/ReportExecution2005.asmx" />
+      <soap12:address location="http://dcap-sql-uhg01.lason.com:80/ReportServer/ReportExecution2005.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

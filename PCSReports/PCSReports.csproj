@@ -28,6 +28,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +48,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -124,11 +127,18 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="ReportViewerForMvc, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ReportViewerForMvc.1.1.1\lib\net45\ReportViewerForMvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -137,8 +147,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -157,9 +166,7 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -177,6 +184,7 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -202,6 +210,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuditLogsController.cs" />
+    <Compile Include="Controllers\BDSetupController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PortalMenusModelsController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -212,6 +222,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AuditLog.cs" />
+    <Compile Include="Models\CustomReportCredentials.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PortalMenusModel.cs" />
@@ -226,12 +238,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Reports\ReportTemplate.aspx.cs">
-      <DependentUpon>ReportTemplate.aspx</DependentUpon>
+    <Compile Include="Reports\ViewReport.aspx.cs">
+      <DependentUpon>ViewReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\ReportTemplate.aspx.designer.cs">
-      <DependentUpon>ReportTemplate.aspx</DependentUpon>
+    <Compile Include="Reports\ViewReport.aspx.designer.cs">
+      <DependentUpon>ViewReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Web References\ReportExecution2005\Reference.cs">
@@ -259,6 +271,7 @@
     <Content Include="Content\Images\exela-logo.png" />
     <Content Include="Content\Images\report.jpg" />
     <Content Include="Content\Images\sourcecorp.jpg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -306,8 +319,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\ReportTemplate.aspx" />
-    <Content Include="ReportViewerWebForm.aspx" />
+    <Content Include="Reports\ViewReport.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -331,6 +343,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -457,10 +470,16 @@
     <Content Include="Web References\ReportService2005\Property.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\ReportService2005\Reference.map">
+    <Content Include="Views\AuditLogs\Create.cshtml" />
+    <Content Include="Views\AuditLogs\Delete.cshtml" />
+    <Content Include="Views\AuditLogs\Details.cshtml" />
+    <Content Include="Views\AuditLogs\Edit.cshtml" />
+    <Content Include="Views\AuditLogs\Index.cshtml" />
+    <Content Include="Views\BDSetup\Index.cshtml" />
+    <None Include="Web References\ReportService2005\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Web References\ReportService2005\ReportHistorySnapshot.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -479,10 +498,10 @@
     <Content Include="Web References\ReportExecution2005\Extension.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\ReportExecution2005\Reference.map">
+    <None Include="Web References\ReportExecution2005\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Views\ReportModels\Create.cshtml" />
     <Content Include="Views\ReportModels\Delete.cshtml" />
     <Content Include="Views\ReportModels\Index.cshtml" />
@@ -494,7 +513,7 @@
     <Content Include="Views\Manage\AddRole.cshtml" />
     <Content Include="Views\Manage\DeleteRole.cshtml" />
     <Content Include="Views\Manage\UserRoles.cshtml" />
-    <Content Include="Views\Report\ViewReport.cshtml" />
+    <Content Include="Views\Report\ViewReportOld.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\PortalMenusModels\Create.cshtml" />
     <Content Include="Views\PortalMenusModels\Delete.cshtml" />
@@ -502,6 +521,10 @@
     <Content Include="Views\PortalMenusModels\Edit.cshtml" />
     <Content Include="Views\PortalMenusModels\Index.cshtml" />
     <Content Include="Views\PortalMenusModels\_PortalMenu.cshtml" />
+    <Content Include="Views\Report\ViewReport.cshtml" />
+    <Content Include="Views\Manage\Users.cshtml" />
+    <Content Include="Views\Manage\SetUserPassword.cshtml" />
+    <Content Include="Views\Manage\DeleteUser.cshtml" />
     <None Include="Web References\ReportExecution2005\ReportExecution2005.wsdl" />
     <Content Include="Web References\ReportExecution2005\Warning.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -547,10 +570,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://dcap-sql-uhg01/ReportServer/ReportExecution2005.asmx">
+    <WebReferenceUrl Include="http://dcap-sql-uhg01.lason.com/ReportServer/ReportExecution2005.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\ReportExecution2005\</RelPath>
-      <UpdateFromURL>http://dcap-sql-uhg01/ReportServer/ReportExecution2005.asmx</UpdateFromURL>
+      <UpdateFromURL>http://dcap-sql-uhg01.lason.com/ReportServer/ReportExecution2005.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -558,10 +581,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>PCSReports_ReportExecution2005_ReportExecutionService</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://dcap-sql-uhg01/ReportServer/ReportService2005.asmx">
+    <WebReferenceUrl Include="http://dcap-sql-uhg01.lason.com/ReportServer/ReportService2005.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\ReportService2005\</RelPath>
-      <UpdateFromURL>http://dcap-sql-uhg01/ReportServer/ReportService2005.asmx</UpdateFromURL>
+      <UpdateFromURL>http://dcap-sql-uhg01.lason.com/ReportServer/ReportService2005.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

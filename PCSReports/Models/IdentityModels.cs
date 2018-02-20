@@ -30,11 +30,12 @@ namespace PCSReports.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<PCSReports.Models.ReportModel> ReportModels { get; set; }
+        public DbSet<PCSReports.Models.ReportModel> ReportModels { get; set; }
 
-        public System.Data.Entity.DbSet<PCSReports.Models.ReportUserModel> ReportUserModels { get; set; }
+        public DbSet<PCSReports.Models.ReportUserModel> ReportUserModels { get; set; }
 
-        public System.Data.Entity.DbSet<PCSReports.Models.PortalMenusModel> PortalMenusModels { get; set; }
+        public DbSet<PCSReports.Models.PortalMenusModel> PortalMenusModels { get; set; }
 
+        public DbSet<AuditLog> AuditRecords { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace PCSReports.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://dcap-sql-uhg01:80/ReportServer/ReportService2005.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://dcap-sql-uhg01.lason.com:80/ReportServer/ReportService2005.asmx")]
         public string PCSReports_ReportService2005_ReportingService2005 {
             get {
                 return ((string)(this["PCSReports_ReportService2005_ReportingService2005"]));
@@ -36,7 +36,7 @@ namespace PCSReports.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://dcap-sql-uhg01:80/ReportServer/ReportExecution2005.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://dcap-sql-uhg01.lason.com:80/ReportServer/ReportExecution2005.asmx")]
         public string PCSReports_ReportExecution2005_ReportExecutionService {
             get {
                 return ((string)(this["PCSReports_ReportExecution2005_ReportExecutionService"]));

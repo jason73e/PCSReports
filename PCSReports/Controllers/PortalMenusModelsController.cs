@@ -18,12 +18,15 @@ namespace PCSReports.Controllers
             return PartialView(db.PortalMenusModels.ToList());
         }
         // GET: PortalMenusModels
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Index()
         {
             return View(db.PortalMenusModels.ToList());
         }
 
         // GET: PortalMenusModels/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,6 +42,8 @@ namespace PCSReports.Controllers
         }
 
         // GET: PortalMenusModels/Create
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +54,8 @@ namespace PCSReports.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Create([Bind(Include = "ID,MenuName,ControllerName,ActionName,MenuType,ParentID,Sortorder,RoleName")] PortalMenusModel portalMenusModel)
         {
             if (ModelState.IsValid)
@@ -62,6 +69,8 @@ namespace PCSReports.Controllers
         }
 
         // GET: PortalMenusModels/Edit/5
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,6 +90,8 @@ namespace PCSReports.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Edit([Bind(Include = "ID,MenuName,ControllerName,ActionName,MenuType,ParentID,Sortorder,RoleName")] PortalMenusModel portalMenusModel)
         {
             if (ModelState.IsValid)
@@ -93,6 +104,8 @@ namespace PCSReports.Controllers
         }
 
         // GET: PortalMenusModels/Delete/5
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,6 +123,8 @@ namespace PCSReports.Controllers
         // POST: PortalMenusModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult DeleteConfirmed(int id)
         {
             PortalMenusModel portalMenusModel = db.PortalMenusModels.Find(id);

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace PCSReports.Controllers
 {
+    [Authorize]
     public class ReportController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -23,7 +24,35 @@ namespace PCSReports.Controllers
         }
 
         // GET: Report/ViewReport/5
-        public ActionResult ViewReport(int? id)
+        [Audit]
+        public ActionResult ViewReport(int? id, int Width, int Height)
+        {
+            ReportViewModel vm = new ReportViewModel();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ReportModel reportModel = db.ReportModels.Find(id);
+            if (reportModel == null)
+            {
+                return HttpNotFound();
+            }
+            string Username = User.Identity.Name;
+            List<ReportModel> lsrm = Utility.GetReportListForUser(Username);
+            if(!lsrm.Where(x=> x.Id==id).Any())
+            {
+                return RedirectToAction("Index");
+            }
+            vm.rm = reportModel;
+            vm.Height = Height;
+            vm.Width = Width;
+            vm.ReportURL = String.Format("../../Reports/ViewReport.aspx?Path={0}&Height={1}", vm.rm.path, Height);
+            vm.lsOuputs = Utility.GetOutputs();
+            return View(vm);
+        }
+
+        // GET: Report/ViewReport/5
+        public ActionResult ViewReportOld(int? id)
         {
             ReportViewModel vm = new ReportViewModel();
             if (id == null)
@@ -66,7 +95,7 @@ namespace PCSReports.Controllers
 
         // POST: Report/Create
         [HttpPost]
-        public ActionResult ViewReport(FormCollection collection)
+        public ActionResult ViewReportOld(FormCollection collection)
         {
             try
             {

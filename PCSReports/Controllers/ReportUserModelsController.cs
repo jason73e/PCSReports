@@ -10,6 +10,7 @@ using PCSReports.Models;
 
 namespace PCSReports.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ReportUserModelsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -26,6 +27,7 @@ namespace PCSReports.Controllers
 
 
         // GET: ReportUserModels/Create
+        [Audit]
         public ActionResult Create()
         {
             ReportUserViewModel vm = new ReportUserViewModel();
@@ -55,6 +57,7 @@ namespace PCSReports.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Audit]
         public ActionResult Create(ReportUserViewModel reportUserModel)
         {
             string sp = Request.Form["chklistitem"];
@@ -102,6 +105,7 @@ namespace PCSReports.Controllers
         }
 
         // GET: ReportUserModels/Delete/5
+        [Audit]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -123,6 +127,7 @@ namespace PCSReports.Controllers
         // POST: ReportUserModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Audit]
         public ActionResult DeleteConfirmed(int id)
         {
             ReportUserModel reportUserModel = db.ReportUserModels.Find(id);

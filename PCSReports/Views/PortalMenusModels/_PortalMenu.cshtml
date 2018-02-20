@@ -27,7 +27,7 @@
                             }
                             else
                             {
-                                if (User.Identity.IsAuthenticated)// && User.IsInRole(menu.RoleName))
+                                if ((User.Identity.IsAuthenticated) && User.IsInRole(menu.RoleName))
                                 {
                                     <li>@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName)</li>
                                 }
@@ -39,7 +39,7 @@
         }
         else
         {
-            if (User.Identity.IsAuthenticated)// && User.IsInRole(item.RoleName))
+            if ((User.Identity.IsAuthenticated) && User.IsInRole(item.RoleName))
             {
                 if (item.MenuType == "MenuItem")
                 {
@@ -62,7 +62,7 @@
                             }
                             else
                             {
-                                if (User.Identity.IsAuthenticated)// && User.IsInRole(menu.RoleName))
+                                if ((User.Identity.IsAuthenticated) && User.IsInRole(menu.RoleName))
                                 {
                                     <li>@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName)</li>
                                 }

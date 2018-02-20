@@ -94,7 +94,8 @@ namespace PCSReports.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         public ActionResult Register()
         {
             return View();
@@ -103,7 +104,8 @@ namespace PCSReports.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        [Audit]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

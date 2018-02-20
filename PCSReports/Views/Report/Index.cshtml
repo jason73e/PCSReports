@@ -14,6 +14,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.lsReportsForUser.FirstOrDefault().name)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lsReportsForUser.FirstOrDefault().description)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +27,10 @@
                     <img src="~/Content/Images/report.jpg" />
                 </td>
                 <td>
-                    @Html.ActionLink(item.name, "ViewReport", new { id = item.Id })
+                    <a id="Report_@item.Id;" href="@Url.Action("ViewReport","Report",new {id = @item.Id , Width = 100, Height = 650 })">@item.name</a>
+                </td>
+                <td>
+                    <label class="control-label">@item.description</label> 
                 </td>
             </tr>
         }
