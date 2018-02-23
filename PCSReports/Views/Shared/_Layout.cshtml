@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/styles")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
@@ -12,33 +12,25 @@
     @Scripts.Render("~/Scripts/DatePickerReady.js")
 </head>
 <body>
-    <div class="navbar navbar-fixed-top" style="background-color:#ffffff;">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <table style="width:100%">
-                    <tr>
-                        <td style="width:10%">
-                            @Html.ActionLink("PCS Reports", "Index", "Report", new { area = "" }, new { @class = "ExelaLogo" })
-                        </td>
-                        <td class="AppLogo" style="width:90%;background-color:#ffffff;"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="navbar navbar-inverse">
-            <div class="container">
-                <div class="navbar-collapse collapse">
-                    @{Html.RenderAction("_PortalMenu", "PortalMenusModels");}
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </div>
+    <div style="position:fixed; top:0;width:100%;height:50px;background-color:#ffffff">
+        <table style="width:100%">
+            <tr>
+                <td style="width:10%">
+                    @Html.ActionLink("PCS Reports", "Index", "Report", new { area = "" }, new { @class = "ExelaLogo navbar-brand" })
+                </td>
+                <td class="AppLogo" style="width:90%;background-color:#ffffff;"></td>
+            </tr>
+        </table>
     </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position:fixed;top:50px;width:100%;height:50px;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            @{Html.RenderAction("_PortalMenu", "PortalMenusModels");}
+            @Html.Partial("_LoginPartial")
+        </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />

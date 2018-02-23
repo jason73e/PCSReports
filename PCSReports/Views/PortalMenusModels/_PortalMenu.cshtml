@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PCSReports.Models.PortalMenusModel>
 
-<ul class="nav navbar-nav">
+<ul class="navbar-nav mr-auto">
     @{ var baseMenu = Model.Where(x => x.ParentID == 0).OrderBy(x => x.Sortorder).ToList();}
     @foreach (var item in baseMenu)
     {
@@ -8,12 +8,12 @@
         {
             if (item.MenuType == "MenuItem")
             {
-                <li>@Html.ActionLink(item.MenuName, item.ActionName, item.ControllerName)</li>
+                <li class="nav-item">@Html.ActionLink(item.MenuName, item.ActionName, item.ControllerName,null, htmlAttributes: new { @class = "nav-link" })</li>
             }
             else
             {
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@item.MenuName<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">@item.MenuName<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         @{ var childmenus = Model.Where(x => x.ParentID == item.ID).OrderBy(x => x.Sortorder).ToList();}
                         @foreach (var menu in childmenus)
@@ -22,14 +22,14 @@
                             {
                                 if (menu.MenuType == "MenuItem")
                                 {
-                                    <li>@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName)</li>
+                                    <li class="dropdown-item">@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName, null, htmlAttributes: new { @class = "dropdown-item" })</li>
                                 }
                             }
                             else
                             {
                                 if ((User.Identity.IsAuthenticated) && User.IsInRole(menu.RoleName))
                                 {
-                                    <li>@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName)</li>
+                                    <li class="dropdown-item">@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName, null, htmlAttributes: new { @class = "dropdown-item" })</li>
                                 }
                             }
                         }
@@ -43,12 +43,12 @@
             {
                 if (item.MenuType == "MenuItem")
                 {
-                    <li>@Html.ActionLink(item.MenuName, item.ActionName, item.ControllerName)</li>
+                    <li class="nav-item">@Html.ActionLink(item.MenuName, item.ActionName, item.ControllerName, null, htmlAttributes: new { @class = "nav-link" })</li>
                 }
                 else
                 {
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@item.MenuName<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">@item.MenuName<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                         @{ var childmenus = Model.Where(x => x.ParentID == item.ID).OrderBy(x => x.Sortorder).ToList();}
                         @foreach (var menu in childmenus)
@@ -57,14 +57,14 @@
                             {
                                 if (menu.MenuType == "MenuItem")
                                 {
-                                    <li>@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName)</li>
+                                    <li class="dropdown-item">@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName, null, htmlAttributes: new { @class = "dropdown-item" })</li>
                                 }
                             }
                             else
                             {
                                 if ((User.Identity.IsAuthenticated) && User.IsInRole(menu.RoleName))
                                 {
-                                    <li>@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName)</li>
+                                    <li class="dropdown-item">@Html.ActionLink(menu.MenuName, menu.ActionName, menu.ControllerName, null, htmlAttributes: new { @class = "dropdown-item" })</li>
                                 }
                             }
                         }

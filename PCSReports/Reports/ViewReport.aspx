@@ -13,7 +13,7 @@
         <div>
             <asp:ScriptManager ID="ScriptManager1" runat="server">               
             </asp:ScriptManager>
-            <rsweb:ReportViewer id="rvSiteMapping" runat ="server" ShowPrintButton="false"  Width="99.9%" Height="100%" AsyncRendering="true" ZoomMode="Percent" KeepSessionAlive="true" SizeToReportContent="false" >
+            <rsweb:ReportViewer id="rvSiteMapping" runat ="server" ShowPrintButton="false"  Width="99.9%" Height="100%" AsyncRendering="true" ZoomMode="Percent" KeepSessionAlive="true" SizeToReportContent="false" BackColor="LightSkyBlue" BorderColor="LightSkyBlue" >
             </rsweb:ReportViewer>  
         </div>
     </form>

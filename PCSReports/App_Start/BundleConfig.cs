@@ -25,10 +25,10 @@ namespace PCSReports
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/ceruleanbootstrap.css",
+            bundles.Add(new StyleBundle("~/Content/css/styles").Include(
+                      "~/Content/css/ceruleanbootstrap.css",
                       "~/Content/themes/base/jquery-ui.css",
-                      "~/Content/site.css"));
+                      "~/Content/css/site.css"));
         }
     }
 }

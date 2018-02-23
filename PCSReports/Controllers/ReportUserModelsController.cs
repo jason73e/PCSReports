@@ -18,11 +18,28 @@ namespace PCSReports.Controllers
         // GET: ReportUserModels
         public ActionResult Index()
         {
+            CleanReportUsers();
             ReportUserViewModel vm = new ReportUserViewModel();
             vm.lsReportUsers = db.ReportUserModels.Where(x => x.isActive == true).OrderBy(x => x.username).ToList();
             vm.lsReports = Utility.GetReports();
             vm.lsUser = Utility.GetUsers();
             return View(vm);
+        }
+
+        private void CleanReportUsers()
+        {
+            List<int> lsReportIds = db.ReportModels.Select(x=>x.Id).ToList();
+            List<int> lsReportUserIds = db.ReportUserModels.Select(x=>x.ReportID).ToList();
+            List<int> lsOldReports = lsReportUserIds.Where(x => !lsReportIds.Any(x2 => x2 == x)).ToList();
+            foreach (int iReportId in lsOldReports)
+            {
+                if (db.ReportUserModels.Any(x => x.ReportID == iReportId))
+                {
+                    List<ReportUserModel> lsReportUsers = db.ReportUserModels.Where(x => x.ReportID == iReportId).ToList();
+                    db.ReportUserModels.RemoveRange(lsReportUsers);
+                    db.SaveChanges();
+                }
+            }
         }
 
 

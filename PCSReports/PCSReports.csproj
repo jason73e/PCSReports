@@ -258,20 +258,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\ceruleanbootstrap.css" />
-    <Content Include="Content\ceruleanbootstrap.min.css" />
+    <Content Include="Content\css\ceruleanbootstrap.css" />
     <Content Include="Content\Images\application_logo.jpg" />
     <Content Include="Content\Images\background.gif" />
     <Content Include="Content\Images\exela-logo.png" />
     <Content Include="Content\Images\report.jpg" />
     <Content Include="Content\Images\sourcecorp.jpg" />
-    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\css\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -315,7 +308,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\css\Site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -337,12 +330,6 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -373,7 +360,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -470,10 +459,6 @@
     <Content Include="Web References\ReportService2005\Property.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Views\AuditLogs\Create.cshtml" />
-    <Content Include="Views\AuditLogs\Delete.cshtml" />
-    <Content Include="Views\AuditLogs\Details.cshtml" />
-    <Content Include="Views\AuditLogs\Edit.cshtml" />
     <Content Include="Views\AuditLogs\Index.cshtml" />
     <Content Include="Views\BDSetup\Index.cshtml" />
     <None Include="Web References\ReportService2005\Reference.map">
