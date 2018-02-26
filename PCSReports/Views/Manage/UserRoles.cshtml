@@ -44,7 +44,7 @@
   function FillRoles() {
       var username = $('#UserName').val();
     $.ajax({
-        url: '/Manage/FillRole',
+        url: "@Url.Action("FillRole", "Manage")",
         type: "GET",
         dataType: "JSON",
         data: { Username: username},

@@ -47,7 +47,7 @@
   function FillReports() {
       var username = $('#reportUser_username').val();
     $.ajax({
-        url: '/ReportUserModels/FillReport',
+        url: "@Url.Action("FillReport", "ReportUserModels")",
         type: "GET",
         dataType: "JSON",
         data: { Username: username},
