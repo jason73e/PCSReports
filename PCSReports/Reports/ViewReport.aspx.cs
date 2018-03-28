@@ -22,7 +22,10 @@ namespace PCSReports.Reports
                     string sPassword = ConfigurationManager.AppSettings["Password"].ToString();
                     string sUrl = ConfigurationManager.AppSettings["reportURL"].ToString();
                     string sPath = Request["Path"];
-
+                    if(sPath==string.Empty)
+                    {
+                        throw new Exception();
+                    }
                     rvSiteMapping.Height = Unit.Pixel(Convert.ToInt32(Request["Height"]) - 58);
                     rvSiteMapping.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Remote;
 
@@ -35,7 +38,7 @@ namespace PCSReports.Reports
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
             }
 
