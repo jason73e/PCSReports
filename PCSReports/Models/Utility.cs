@@ -154,5 +154,12 @@ namespace PCSReports.Models
             return sl;
         }
 
+        public static void AddLog(AuditLog log)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            db.AuditRecords.Add(log);
+            db.SaveChanges();
+        }
+
     }
 }

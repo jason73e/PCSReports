@@ -16,10 +16,12 @@ namespace PCSReports.Models
         public string UserName { get; set; }
         public string URLAccessed { get; set; }
         public DateTime TimeAccessed { get; set; }
+        public string Message { get; set; }
 
         public AuditLog()
         {
         }
+
     }
     public class AuditAttribute : ActionFilterAttribute
     {
