@@ -1,12 +1,31 @@
 ﻿@model PCSReports.Models.ReportUserViewModel
+@using PagedList.Mvc
 
 @{
     ViewBag.Title = "Report List";
 }
 
 <h2>Report List</h2>
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <tr>
+            <td align="left"><label class="control-label">Filter by Report name:</label></td>
+            <td align="left">@Html.TextBox("SearchFilter", (string)ViewBag.CurrentFilter, new { @class = "form-control" })</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right"><input type="submit" value="Search" class="btn btn-primary" /></td>
+        </tr>
+    </table>
+}
+<br />
+Page @(Model.lsReportsForUser.PageCount < Model.lsReportsForUser.PageNumber ? 0 : Model.lsReportsForUser.PageNumber) of @Model.lsReportsForUser.PageCount
 
-<table class="table table-striped table-hover">
+@Html.PagedListPager(Model.lsReportsForUser, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+
+<br />
+
+<table class="table table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>
@@ -30,9 +49,13 @@
                     <a id="Report_@item.Id;" href="@Url.Action("ViewReport","Report",new {id = @item.Id , Width = 100, Height = 650 })">@item.name</a>
                 </td>
                 <td>
-                    <label class="control-label">@item.description</label> 
+                    <label class="control-label">@item.description</label>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<br />
+Page @(Model.lsReportsForUser.PageCount < Model.lsReportsForUser.PageNumber ? 0 : Model.lsReportsForUser.PageNumber) of @Model.lsReportsForUser.PageCount
+
+@Html.PagedListPager(Model.lsReportsForUser, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))

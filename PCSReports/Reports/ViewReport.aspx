@@ -11,7 +11,7 @@
 <body style="margin: 0px; padding: 0px;">
     <form id="form1" runat="server">
         <div>
-            <asp:ScriptManager ID="ScriptManager1" runat="server">               
+            <asp:ScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeOut="36000">               
             </asp:ScriptManager>
             <rsweb:ReportViewer id="rvSiteMapping" runat ="server" ShowPrintButton="false"  Width="99%" Height="99%" AsyncRendering="true" ZoomMode="Percent" KeepSessionAlive="true" SizeToReportContent="false" BackColor="LightSkyBlue" BorderColor="LightSkyBlue">
             </rsweb:ReportViewer>  

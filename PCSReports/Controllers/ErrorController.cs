@@ -11,15 +11,44 @@ namespace PCSReports.Controllers
     {
         public ActionResult Index()
         {
-            AuditLog audit = new AuditLog()
+            Response.StatusCode = 200;
+            AuditLog audit = new AuditLog();
+            String sPath = string.Empty;
+            string sMessage = string.Empty;
+            try
             {
-                AuditID = Guid.NewGuid(),
-                IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.UserHostAddress,
-                TimeAccessed = DateTime.UtcNow,
-                URLAccessed = Request.QueryString["aspxerrorpath"].ToString(),
-                UserName = (Request.IsAuthenticated) ? HttpContext.User.Identity.Name : "Anonymous",
-                Message = "Error"
-            };
+                sMessage = "Error Exception: " + Request.QueryString["exception"].ToString();
+            }
+            catch(Exception e)
+            {
+                sMessage = "Error";
+            }
+
+            try
+            {
+                sMessage += " Error Message: " + Request.QueryString["message"].ToString();
+            }
+            catch (Exception e)
+            {
+                sMessage += " Error";
+            }
+
+            try
+            {
+                sPath = Request.QueryString["aspxerrorpath"].ToString();
+            }
+            catch(Exception e)
+            {
+                sPath = Request.Url.ToString();
+            }
+
+            audit.AuditID = Guid.NewGuid();
+            audit.IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.UserHostAddress;
+            audit.TimeAccessed = DateTime.UtcNow;
+            audit.URLAccessed = sPath;
+            audit.UserName = (Request.IsAuthenticated) ? HttpContext.User.Identity.Name : "Anonymous";
+            audit.Message = sMessage;
+            
             Utility.AddLog(audit);
             return View("Error");
         }
@@ -27,15 +56,44 @@ namespace PCSReports.Controllers
         public ActionResult NotFound()
         {
             Response.StatusCode = 200;
-            AuditLog audit = new AuditLog()
+            AuditLog audit = new AuditLog();
+            String sPath = string.Empty;
+            string sMessage = string.Empty;
+            try
             {
-                AuditID = Guid.NewGuid(),
-                IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.UserHostAddress,
-                TimeAccessed = DateTime.UtcNow,
-                URLAccessed = Request.QueryString["aspxerrorpath"].ToString(),
-                UserName = (Request.IsAuthenticated) ? HttpContext.User.Identity.Name : "Anonymous",
-                Message = "Not Found Error"
-            };
+                sMessage = "Not Found Error " + Request.QueryString["exception"].ToString();
+            }
+            catch (Exception e)
+            {
+                sMessage = "Not Found Error";
+            }
+
+            try
+            {
+                sMessage += " Error Message: " + Request.QueryString["message"].ToString();
+            }
+            catch (Exception e)
+            {
+                sMessage += " Not Found Error";
+            }
+
+
+            try
+            {
+                sPath = Request.QueryString["aspxerrorpath"].ToString();
+            }
+            catch (Exception e)
+            {
+                sPath = Request.Url.ToString();
+            }
+
+            audit.AuditID = Guid.NewGuid();
+            audit.IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.UserHostAddress;
+            audit.TimeAccessed = DateTime.UtcNow;
+            audit.URLAccessed = sPath;
+            audit.UserName = (Request.IsAuthenticated) ? HttpContext.User.Identity.Name : "Anonymous";
+            audit.Message = sMessage;
+
             Utility.AddLog(audit);
             return View("NotFound");
         }
@@ -43,15 +101,42 @@ namespace PCSReports.Controllers
         public ActionResult InternalServer()
         {
             Response.StatusCode = 200;
-            AuditLog audit = new AuditLog()
+            AuditLog audit = new AuditLog();
+            String sPath = string.Empty;
+            string sMessage = string.Empty;
+            try
             {
-                AuditID = Guid.NewGuid(),
-                IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.UserHostAddress,
-                TimeAccessed = DateTime.UtcNow,
-                URLAccessed = Request.QueryString["aspxerrorpath"].ToString(),
-                UserName = (Request.IsAuthenticated) ? HttpContext.User.Identity.Name : "Anonymous",
-                Message = "Internal Server Error"
-            };
+                sMessage = "Internal Server Error " + Request.QueryString["exception"].ToString();
+            }
+            catch (Exception e)
+            {
+                sMessage = "Internal Server Error";
+            }
+
+            try
+            {
+                sMessage += " Error Message: " + Request.QueryString["message"].ToString();
+            }
+            catch (Exception e)
+            {
+                sMessage += " Internal Server Error";
+            }
+            try
+            {
+                sPath = Request.QueryString["aspxerrorpath"].ToString();
+            }
+            catch (Exception e)
+            {
+                sPath = Request.Url.ToString();
+            }
+
+            audit.AuditID = Guid.NewGuid();
+            audit.IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? Request.UserHostAddress;
+            audit.TimeAccessed = DateTime.UtcNow;
+            audit.URLAccessed = sPath;
+            audit.UserName = (Request.IsAuthenticated) ? HttpContext.User.Identity.Name : "Anonymous";
+            audit.Message = sMessage;
+
             Utility.AddLog(audit);
             return View("InternalServer");
         }

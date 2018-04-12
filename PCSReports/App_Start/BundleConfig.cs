@@ -27,6 +27,7 @@ namespace PCSReports
 
             bundles.Add(new StyleBundle("~/Content/css/styles").Include(
                       "~/Content/css/ceruleanbootstrap.css",
+                      "~/Content/css/PagedList.css",
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/css/site.css"));
         }

@@ -1,48 +1,74 @@
-﻿@model IEnumerable<PCSReports.Models.AuditLog>
-
+﻿@model PagedList.IPagedList<PCSReports.Models.AuditLog>
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Audit Logs";
 }
 
 <h2>Audit Logs</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IPAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.URLAccessed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TimeAccessed)
-        </th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IPAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.URLAccessed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TimeAccessed)
-        </td>
-    </tr>
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <tr>
+            <td align="left"><label class="control-label">Filter by Username:</label></td>
+            <td align="left">@Html.TextBox("UserFilter", (string)ViewBag.CurrentUserFilter, new { @class = "form-control" })</td>
+            <td align="left"><label class="control-label">Filter by IP Address:</label></td>
+            <td align="left">@Html.TextBox("IPAddressFilter", (string)ViewBag.CurrentIPAddressFilter, new { @class = "form-control" })</td>
+            <td align="left"><label class="control-label">Filter by URL:</label></td>
+            <td align="left">@Html.TextBox("URLFilter", (string)ViewBag.CurrentURLFilter, new { @class = "form-control" })</td>
+        </tr>
+        <tr>
+            <td colspan="5" align="right"><input type="submit" value="Search" class="btn btn-primary" /></td>
+        </tr>
+    </table>
 }
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentUserFilter = ViewBag.CurrentUserFilter, currentIPAddressFilter = ViewBag.CurrentIPAddressFilter, currentURLFilter = ViewBag.CurrentURLFilter }))
+
+<br />
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].IPAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].URLAccessed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Message)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].TimeAccessed)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IPAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.URLAccessed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeAccessed)
+            </td>
+        </tr>
+    }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentUserFilter = ViewBag.CurrentUserFilter, currentIPAddressFilter = ViewBag.CurrentIPAddressFilter, currentURLFilter = ViewBag.CurrentURLFilter }))

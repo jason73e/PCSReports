@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PCSReports.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,22 +22,26 @@ namespace PCSReports
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-
-        protected void Application_EndRequest(object sender, EventArgs e)
+        protected void Application_Error()
         {
-            if (Response.Cookies.Count > 0)
+            var exception = Server.GetLastError();
+            var httpException = exception as HttpException;
+            if (httpException == null)
             {
-                foreach (string s in Response.Cookies.AllKeys)
-                {
-                    if (Request.IsSecureConnection)
-                    {
-                        //if (s == FormsAuthentication.FormsCookieName || s.ToLower() == "asp.net_sessionid")
-                        //{
-                        Response.Cookies[s].Secure = true;
-                        //}
-                    }
-                }
+                return;
             }
+
+            var statusCode = httpException.GetHttpCode();
+            Response.Clear();
+            Server.ClearError();
+            string sController = "Error";
+            string sException = exception.Message;
+            string sPath = Request.Url.ToString();
+            string sAction = "Index";
+            Response.TrySkipIisCustomErrors = true;
+            Context.Server.ClearError();
+            Response.Redirect(String.Format("~/{0}/{1}/?message={2}&aspxerrorpath={3}", sController,sAction, sException,sPath));
+
         }
     }
 }

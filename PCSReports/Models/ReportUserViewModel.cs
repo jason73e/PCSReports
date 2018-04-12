@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace PCSReports.Models
 {
@@ -10,7 +11,7 @@ namespace PCSReports.Models
     {
         public IEnumerable<ReportUserModel> lsReportUsers { get; set; }
 
-        public IEnumerable<ReportModel> lsReportsForUser { get; set; }
+        public IPagedList<ReportModel> lsReportsForUser { get; set; }
 
         public ReportUserModel reportUser { get; set; }
 

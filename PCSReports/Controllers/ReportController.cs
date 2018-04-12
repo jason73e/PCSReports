@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 
 namespace PCSReports.Controllers
 {
@@ -12,11 +13,28 @@ namespace PCSReports.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Report
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter, string SearchFilter, int? page)
         {
+            if (SearchFilter != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                SearchFilter = currentFilter;
+            }
+            ViewBag.CurrentFilter = SearchFilter;
             string Username = User.Identity.Name;
+            List<ReportModel> reports = Utility.GetReportListForUser(Username);
+            if (!String.IsNullOrEmpty(SearchFilter))
+            {
+                reports = reports.Where(s => s.name.ToLower().Contains(SearchFilter.ToLower())).ToList();
+            }
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+
             ReportUserViewModel vm = new ReportUserViewModel();
-            vm.lsReportsForUser = Utility.GetReportListForUser(Username);
+            vm.lsReportsForUser = reports.ToPagedList(pageNumber, pageSize);
             return View(vm);
         }
 
@@ -43,7 +61,7 @@ namespace PCSReports.Controllers
             vm.rm = reportModel;
             vm.Height = Height;
             vm.Width = Width;
-            vm.ReportURL = String.Format("../../Reports/ViewReport.aspx?Path={0}&Height={1}", vm.rm.path, Height);
+            vm.ReportURL = String.Format("https://dcsreports.exelaonline.com/PCSReports/Reports/ViewReport.aspx?Path={0}&Height={1}", vm.rm.path, Height);
             vm.lsOuputs = Utility.GetOutputs();
             return View(vm);
         }
