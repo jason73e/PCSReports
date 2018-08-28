@@ -83,7 +83,7 @@ namespace PCSReports.Controllers
             List<ApplicationUser> lsUsers = new List<ApplicationUser>();
             if (db.Users.Any())
             {
-                lsUsers = db.Users.ToList();
+                lsUsers = db.Users.OrderBy(x => x.UserName).ToList();
             }
             usersViewModel.AllUsers = lsUsers;
             return View(usersViewModel);

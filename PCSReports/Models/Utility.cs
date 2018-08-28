@@ -53,7 +53,7 @@ namespace PCSReports.Models
         public static List<ReportModel> GetReportListForUser(string Username)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).ToList();
+            List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).OrderBy(x=>x.name).ToList();
             List<ReportModel> UserReports = new List<ReportModel>();
             foreach (ReportModel i in reports)
             {
@@ -117,7 +117,7 @@ namespace PCSReports.Models
                 output.Append(" />");
                 output.Append("</td>");
                 output.Append("<td>");
-                output.Append(item.Text);
+                output.Append(item.Text + " | " + item.Value );
                 output.Append("</td>");
                 output.Append("</tr>");
             }

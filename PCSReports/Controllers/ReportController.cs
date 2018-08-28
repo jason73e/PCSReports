@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using PagedList;
+using System.Configuration;
 
 namespace PCSReports.Controllers
 {
@@ -13,6 +14,7 @@ namespace PCSReports.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Report
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Index(string currentFilter, string SearchFilter, int? page)
         {
             if (SearchFilter != null)
@@ -40,6 +42,7 @@ namespace PCSReports.Controllers
 
         // GET: Report/ViewReport/5
         [Audit]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ViewReport(int? id, int Width, int Height)
         {
             ReportViewModel vm = new ReportViewModel();
@@ -61,7 +64,9 @@ namespace PCSReports.Controllers
             vm.rm = reportModel;
             vm.Height = Height;
             vm.Width = Width;
-            vm.ReportURL = String.Format("https://dcsreports.exelaonline.com/PCSReports/Reports/ViewReport.aspx?Path={0}&Height={1}", vm.rm.path, Height);
+            string sUrlBase = ConfigurationManager.AppSettings["UrlBase"];
+            string sUrlpath = String.Format(sUrlBase + "ViewReport.aspx?Path={0}&Height={1}", vm.rm.path, Height);
+            vm.ReportURL = sUrlpath;
             vm.lsOuputs = Utility.GetOutputs();
             return View(vm);
         }

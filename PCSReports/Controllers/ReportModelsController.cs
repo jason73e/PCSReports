@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using PCSReports.Models;
+using PagedList;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace PCSReports.Controllers
 {
@@ -17,9 +17,28 @@ namespace PCSReports.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ReportModels
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter, string SearchFilter, int? page)
         {
-            return View(db.ReportModels.Where(x=>x.isActive==true).OrderBy(x=>x.name).ToList());
+            if (SearchFilter != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                SearchFilter = currentFilter;
+            }
+            ViewBag.CurrentFilter = SearchFilter;
+            List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).OrderBy(x => x.name).ToList();
+            if (!String.IsNullOrEmpty(SearchFilter))
+            {
+                reports = reports.Where(s => s.name.ToLower().Contains(SearchFilter.ToLower())).ToList();
+            }
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+
+            ReportUserViewModel vm = new ReportUserViewModel();
+            vm.lsReportsForUser = reports.ToPagedList(pageNumber, pageSize);
+            return View(vm);
         }
 
 
@@ -66,6 +85,39 @@ namespace PCSReports.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+
+        // GET: ReportModels/Edit/5
+        [Audit]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ReportModel reportModel = db.ReportModels.Find(id);
+            if (reportModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(reportModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        [Audit]
+        public ActionResult Edit([Bind(Include = "ID,NAME,DESCRIPTION,PATH,ISACTIVE,TS")] ReportModel reportModel)
+        {
+            reportModel.ts = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                db.Entry(reportModel).State = EntityState.Modified;
+                
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(reportModel);
         }
 
         // GET: ReportModels/Delete/5

@@ -9,7 +9,7 @@ namespace PCSReports.Models
 {
     public class ReportUserViewModel
     {
-        public IEnumerable<ReportUserModel> lsReportUsers { get; set; }
+        public IPagedList<ReportUserModel> lsReportUsers { get; set; }
 
         public IPagedList<ReportModel> lsReportsForUser { get; set; }
 

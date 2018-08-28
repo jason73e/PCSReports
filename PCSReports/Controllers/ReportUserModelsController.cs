@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PCSReports.Models;
+using PagedList;
 
 namespace PCSReports.Controllers
 {
@@ -16,11 +17,27 @@ namespace PCSReports.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ReportUserModels
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter, string SearchFilter, int? page)
         {
+            if (SearchFilter != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                SearchFilter = currentFilter;
+            }
+            ViewBag.CurrentFilter = SearchFilter;
             CleanReportUsers();
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
             ReportUserViewModel vm = new ReportUserViewModel();
-            vm.lsReportUsers = db.ReportUserModels.Where(x => x.isActive == true).OrderBy(x => x.username).ToList();
+            List<ReportUserModel> ls = db.ReportUserModels.Where(x => x.isActive == true).OrderBy(x => x.username).ToList();
+            if(!string.IsNullOrEmpty(SearchFilter))
+            {
+                ls = ls.Where(x => x.username == SearchFilter).ToList();
+            }
+            vm.lsReportUsers = ls.ToPagedList(pageNumber, pageSize);
             vm.lsReports = Utility.GetReports();
             vm.lsUser = Utility.GetUsers();
             return View(vm);
@@ -48,7 +65,7 @@ namespace PCSReports.Controllers
         public ActionResult Create()
         {
             ReportUserViewModel vm = new ReportUserViewModel();
-            vm.lsReportUsers = new List<ReportUserModel>();
+            //vm.lsReportUsers = new List<ReportUserModel>();
             vm.lsReports = Utility.GetReports();
             vm.lsUser = Utility.GetUsers();
             return View(vm);
