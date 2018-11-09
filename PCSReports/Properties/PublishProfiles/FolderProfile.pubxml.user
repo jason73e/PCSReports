@@ -22,10 +22,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/27/2018 11:06:48</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/28/2018 13:41:07</publishTime>
+      <publishTime>11/09/2018 11:33:00</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/28/2018 13:41:06</publishTime>
+      <publishTime>11/09/2018 11:33:00</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 13:15:18</publishTime>
@@ -121,13 +121,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/30/2013 18:15:20</publishTime>
     </File>
     <File Include="bin/PCSReports.dll">
-      <publishTime>08/28/2018 13:39:49</publishTime>
+      <publishTime>11/09/2018 11:32:37</publishTime>
     </File>
     <File Include="bin/PCSReports.pdb">
-      <publishTime>08/28/2018 13:39:49</publishTime>
+      <publishTime>11/09/2018 11:32:37</publishTime>
     </File>
     <File Include="bin/PCSReports.XmlSerializers.dll">
-      <publishTime>08/28/2018 13:39:51</publishTime>
+      <publishTime>11/09/2018 11:32:39</publishTime>
     </File>
     <File Include="bin/ReportViewerForMvc.dll">
       <publishTime>09/19/2017 22:35:44</publishTime>
@@ -547,7 +547,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/25/2018 09:53:18</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/28/2018 13:40:57</publishTime>
+      <publishTime>11/09/2018 11:32:55</publishTime>
     </File>
     <File Include="Reports/Error.html">
       <publishTime>03/27/2018 10:35:25</publishTime>
@@ -714,8 +714,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/umd/popper.min.js.map">
       <publishTime>05/14/2018 11:20:48</publishTime>
     </File>
+    <File Include="ViewCustomReport.aspx">
+      <publishTime>08/31/2018 09:22:41</publishTime>
+    </File>
     <File Include="ViewReport.aspx">
-      <publishTime>08/23/2018 12:42:32</publishTime>
+      <publishTime>10/18/2018 14:14:06</publishTime>
     </File>
     <File Include="Views/Account/ForgotPassword.cshtml">
       <publishTime>01/25/2018 09:54:42</publishTime>
@@ -754,7 +757,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/02/2018 12:34:34</publishTime>
     </File>
     <File Include="Views/Manage/ChangePassword.cshtml">
-      <publishTime>01/25/2018 09:54:43</publishTime>
+      <publishTime>08/29/2018 11:06:28</publishTime>
     </File>
     <File Include="Views/Manage/DeleteRole.cshtml">
       <publishTime>02/02/2018 13:05:21</publishTime>
@@ -763,7 +766,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/16/2018 11:27:58</publishTime>
     </File>
     <File Include="Views/Manage/Index.cshtml">
-      <publishTime>01/26/2018 11:43:46</publishTime>
+      <publishTime>08/29/2018 11:11:03</publishTime>
     </File>
     <File Include="Views/Manage/Roles.cshtml">
       <publishTime>02/02/2018 12:24:07</publishTime>
@@ -781,7 +784,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/15/2018 14:02:09</publishTime>
     </File>
     <File Include="Views/PortalMenusModels/Create.cshtml">
-      <publishTime>02/13/2018 11:44:47</publishTime>
+      <publishTime>10/18/2018 08:23:23</publishTime>
     </File>
     <File Include="Views/PortalMenusModels/Delete.cshtml">
       <publishTime>02/13/2018 11:44:47</publishTime>
@@ -790,16 +793,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/13/2018 11:44:47</publishTime>
     </File>
     <File Include="Views/PortalMenusModels/Edit.cshtml">
-      <publishTime>02/13/2018 11:44:47</publishTime>
+      <publishTime>08/29/2018 12:58:31</publishTime>
     </File>
     <File Include="Views/PortalMenusModels/Index.cshtml">
-      <publishTime>02/13/2018 11:44:47</publishTime>
+      <publishTime>08/29/2018 12:48:55</publishTime>
     </File>
     <File Include="Views/PortalMenusModels/_PortalMenu.cshtml">
       <publishTime>02/23/2018 11:34:03</publishTime>
     </File>
     <File Include="Views/Report/Index.cshtml">
-      <publishTime>04/11/2018 13:24:26</publishTime>
+      <publishTime>10/24/2018 14:36:25</publishTime>
+    </File>
+    <File Include="Views/Report/ViewCustomReport.cshtml">
+      <publishTime>08/31/2018 12:04:50</publishTime>
     </File>
     <File Include="Views/Report/ViewReport.cshtml">
       <publishTime>03/27/2018 12:03:23</publishTime>
@@ -819,6 +825,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/ReportModels/Index.cshtml">
       <publishTime>08/28/2018 13:12:56</publishTime>
     </File>
+    <File Include="Views/ReportUserModels/Copy.cshtml">
+      <publishTime>11/09/2018 09:59:35</publishTime>
+    </File>
     <File Include="Views/ReportUserModels/Create.cshtml">
       <publishTime>02/26/2018 12:53:42</publishTime>
     </File>
@@ -826,7 +835,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/29/2018 13:10:59</publishTime>
     </File>
     <File Include="Views/ReportUserModels/Index.cshtml">
-      <publishTime>05/10/2018 10:43:57</publishTime>
+      <publishTime>11/09/2018 11:07:12</publishTime>
     </File>
     <File Include="Views/Shared/EditorTemplates/DateTime.cshtml">
       <publishTime>02/14/2018 13:04:47</publishTime>
@@ -838,7 +847,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/25/2018 09:54:43</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/10/2018 11:12:20</publishTime>
+      <publishTime>10/24/2018 14:24:30</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>02/23/2018 14:42:36</publishTime>

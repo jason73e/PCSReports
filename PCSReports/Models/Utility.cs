@@ -50,19 +50,108 @@ namespace PCSReports.Models
             return new SelectList(users, "Value", "Text");
         }
 
+        public static SelectList GetMenuTypes()
+        {
+            IList<SelectListItem> menutypes = new List<SelectListItem>();
+            SelectListItem sliMenu = new SelectListItem { Value = "Menu", Text = "Menu" };
+            SelectListItem sliMenuItem = new SelectListItem { Value = "MenuItem", Text = "MenuItem" };
+
+            menutypes.Insert(0, sliMenu);
+            menutypes.Insert(0, sliMenuItem);
+
+            SelectList sl = new SelectList(menutypes, "Value", "Text");
+            return sl;
+
+        }
+
+        public static SelectList GetParentMenus()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            IList<SelectListItem> menus = db.PortalMenusModels.Where(x=> x.MenuType.ToLower()=="menu").Select(x => new SelectListItem { Value = x.ID.ToString(), Text = x.MenuName }).OrderBy(x => x.Text).ToList();
+            SelectListItem sliRoot = new SelectListItem { Value = "0", Text = "Root" };
+            menus.Insert(0,sliRoot);
+            SelectList sl = new SelectList(menus, "Value", "Text");
+            return sl;
+
+        }
+        public static List<ReportModel> GetAllReportListForUser(string Username)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).OrderBy(x => x.name).ToList();
+            List<ReportModel> UserReports = new List<ReportModel>();
+            List<ReportUserModel> lsReportsforUser = db.ReportUserModels.Where(x => x.username == Username && x.isActive == true).ToList();
+            if (lsReportsforUser.Count > 0)
+            {
+                foreach (ReportModel i in reports)
+                {
+                    if (lsReportsforUser.Where(x => x.ReportID == i.Id).Any())
+                    {
+                        UserReports.Add(i);
+                    }
+                }
+            }
+            return UserReports;
+        }
+
         public static List<ReportModel> GetReportListForUser(string Username)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).OrderBy(x=>x.name).ToList();
             List<ReportModel> UserReports = new List<ReportModel>();
-            foreach (ReportModel i in reports)
+            List<ReportUserModel> lsReportsforUser = db.ReportUserModels.Where(x => x.username == Username && x.isActive == true).ToList();
+            int iAverageViews = 0;
+            if (lsReportsforUser.Count > 0)
             {
-                if (db.ReportUserModels.Where(x => x.username == Username && x.ReportID == i.Id && x.isActive == true).Any())
+                iAverageViews = Convert.ToInt32(lsReportsforUser.Average(x => x.Views));
+                foreach (ReportModel i in reports)
                 {
-                    UserReports.Add(i);
+                    if (lsReportsforUser.Where(x => x.ReportID == i.Id && x.Views <= iAverageViews).Any())
+                    {
+                        UserReports.Add(i);
+                    }
                 }
             }
             return UserReports;
+        }
+
+        public static List<ReportModel> GetCommonReportListForUser(string Username)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).OrderBy(x => x.name).ToList();
+            List<ReportModel> UserReports = new List<ReportModel>();
+            List<ReportUserModel> lsReportsforUser = db.ReportUserModels.Where(x => x.username == Username && x.isActive == true).ToList();
+            int iAverageViews = 0;
+            if (lsReportsforUser.Count > 0)
+            {
+                iAverageViews = Convert.ToInt32(lsReportsforUser.Average(x => x.Views));
+                foreach (ReportModel i in reports)
+                {
+                    if (lsReportsforUser.Where(x => x.ReportID == i.Id && x.Views > iAverageViews).Any())
+                    {
+                        UserReports.Add(i);
+                    }
+                }
+            }
+            return UserReports;
+        }
+
+        public static bool UserHasAccess(string username, int? id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return (db.ReportUserModels.Where(x => x.username == username && x.ReportID == id && x.isActive == true).Any());
+        }
+
+        public static void UserViewReport(string username, int? id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (db.ReportUserModels.Where(x => x.username == username && x.ReportID == id && x.isActive == true).Any())
+            {
+                ReportUserModel r = db.ReportUserModels.Where(x => x.username == username && x.ReportID == id && x.isActive == true).Single();
+                r.Views = r.Views + 1;
+                db.SaveChanges();
+            }
+                
+            
         }
 
         public static IList<SelectListItem> GetRoles()

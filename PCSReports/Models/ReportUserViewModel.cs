@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,5 +21,9 @@ namespace PCSReports.Models
         public SelectList lsReports { get; set; }
 
         public string reportChks { get; set; }
+        [Display(Name ="Copy From")]
+        public string CopyFromUser { get; set; }
+        [Display(Name = "Copy To")]
+        public string CopyToUser { get; set; }
     }
 }

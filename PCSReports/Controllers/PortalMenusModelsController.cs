@@ -22,23 +22,15 @@ namespace PCSReports.Controllers
         [Audit]
         public ActionResult Index()
         {
-            return View(db.PortalMenusModels.ToList());
-        }
-
-        // GET: PortalMenusModels/Details/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PortalMenusModel portalMenusModel = db.PortalMenusModels.Find(id);
-            if (portalMenusModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(portalMenusModel);
+            PortalMenuViewModel vm = new PortalMenuViewModel();
+            vm.lsMenus = db.PortalMenusModels.ToList();
+            IList<SelectListItem> lsItems = Utility.GetRoles();
+            SelectListItem sliAll = new SelectListItem { Value = "All", Text = "All" };
+            lsItems.Insert(0, sliAll);
+            vm.slRoles = new SelectList(lsItems, "Text", "Text");
+            vm.slParentMenus = Utility.GetParentMenus();
+            vm.slMenuTypes = Utility.GetMenuTypes();
+            return View(vm);
         }
 
         // GET: PortalMenusModels/Create
@@ -46,7 +38,15 @@ namespace PCSReports.Controllers
         [Audit]
         public ActionResult Create()
         {
-            return View();
+            PortalMenuViewModel vm = new PortalMenuViewModel();
+            vm.menusModel = new PortalMenusModel();
+            IList<SelectListItem> lsItems = Utility.GetRoles();
+            SelectListItem sliAll = new SelectListItem { Value = "All", Text = "All" };
+            lsItems.Insert(0, sliAll);
+            vm.slRoles = new SelectList(lsItems, "Text", "Text");
+            vm.slParentMenus = Utility.GetParentMenus();
+            vm.slMenuTypes = Utility.GetMenuTypes();
+            return View(vm);
         }
 
         // POST: PortalMenusModels/Create
@@ -82,7 +82,15 @@ namespace PCSReports.Controllers
             {
                 return HttpNotFound();
             }
-            return View(portalMenusModel);
+            PortalMenuViewModel vm = new PortalMenuViewModel();
+            vm.menusModel = portalMenusModel;
+            IList<SelectListItem> lsItems = Utility.GetRoles();
+            SelectListItem sliAll = new SelectListItem { Value = "All", Text = "All" };
+            lsItems.Insert(0, sliAll);
+            vm.slRoles = new SelectList(lsItems, "Text", "Text");
+            vm.slParentMenus = Utility.GetParentMenus();
+            vm.slMenuTypes = Utility.GetMenuTypes();
+            return View(vm);
         }
 
         // POST: PortalMenusModels/Edit/5
@@ -100,7 +108,15 @@ namespace PCSReports.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(portalMenusModel);
+            PortalMenuViewModel vm = new PortalMenuViewModel();
+            vm.menusModel = portalMenusModel;
+            IList<SelectListItem> lsItems = Utility.GetRoles();
+            SelectListItem sliAll = new SelectListItem { Value = "All", Text = "All" };
+            lsItems.Insert(0, sliAll);
+            vm.slRoles = new SelectList(lsItems, "Text", "Text");
+            vm.slParentMenus = Utility.GetParentMenus();
+            vm.slMenuTypes = Utility.GetMenuTypes();
+            return View(vm);
         }
 
         // GET: PortalMenusModels/Delete/5

@@ -1,0 +1,30 @@
+﻿
+@model PCSReports.Models.ReportViewModel
+<H1>
+    @Model.rm.name
+</H1>
+<div>
+    <table>
+        @foreach (Microsoft.Reporting.WebForms.ReportParameterInfo rpi in Model.reportParameterInfoCollection)
+        {
+            if (rpi.Visible && rpi.PromptUser)
+            {
+        <tr>
+            <td><label>@rpi.Prompt</label></td>
+            <td>
+                @if (rpi.ValidValues != null)
+                {
+                    @Html.DropDownList(rpi.Name, new SelectList(rpi.ValidValues,"Value","Label"), "<-Select->", htmlAttributes: new { @class = "form-control" })
+                }
+            </td>
+        </tr>
+            }
+        }
+    </table>
+</div>
+
+<iframe id="frmReport" src="@Model.ReportURL" frameborder="0" style="@String.Format("width:{0}%; height: {1}px;", Model.Width, Model.Height)" scrolling="auto"></iframe>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

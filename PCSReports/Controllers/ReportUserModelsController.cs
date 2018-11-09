@@ -33,10 +33,7 @@ namespace PCSReports.Controllers
             int pageNumber = (page ?? 1);
             ReportUserViewModel vm = new ReportUserViewModel();
             List<ReportUserModel> ls = db.ReportUserModels.Where(x => x.isActive == true).OrderBy(x => x.username).ToList();
-            if(!string.IsNullOrEmpty(SearchFilter))
-            {
-                ls = ls.Where(x => x.username == SearchFilter).ToList();
-            }
+            ls = ls.Where(x => x.username == SearchFilter).ToList();
             vm.lsReportUsers = ls.ToPagedList(pageNumber, pageSize);
             vm.lsReports = Utility.GetReports();
             vm.lsUser = Utility.GetUsers();
@@ -106,6 +103,33 @@ namespace PCSReports.Controllers
 
             AddReportsForUser(sUserName, lsReportIDs);
 
+            return RedirectToAction("Index");
+        }
+
+        // GET: ReportUserModels/Create
+        [Audit]
+        public ActionResult Copy()
+        {
+            ReportUserViewModel vm = new ReportUserViewModel();
+            vm.lsUser = Utility.GetUsers();
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Audit]
+        public ActionResult Copy(ReportUserViewModel reportUserModel)
+        {
+            List<string> lsRemoveReports = Utility.GetAllReportListForUser(reportUserModel.CopyToUser).Select(x => x.Id.ToString()).ToList();
+            List<string> lsAddReports = Utility.GetAllReportListForUser(reportUserModel.CopyFromUser).Select(x => x.Id.ToString()).ToList();
+            if (lsRemoveReports.Count > 0)
+            {
+                RemoveReportsForUser(reportUserModel.CopyToUser, lsRemoveReports);
+            }
+            if (lsAddReports.Count > 0)
+            {
+                AddReportsForUser(reportUserModel.CopyToUser, lsAddReports);
+            }
             return RedirectToAction("Index");
         }
 

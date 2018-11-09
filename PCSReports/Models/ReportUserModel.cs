@@ -21,5 +21,12 @@ namespace PCSReports.Models
         public bool isActive { get; set; }
         [Display(Name = "Last Update")]
         public DateTime ts { get; set; }
+        
+        public int Views { get; set; }
+
+        public ReportUserModel()
+        {
+            Views = 0;
+        }
     }
 }

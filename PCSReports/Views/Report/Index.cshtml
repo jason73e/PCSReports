@@ -47,6 +47,7 @@ Page @(Model.lsReportsForUser.PageCount < Model.lsReportsForUser.PageNumber ? 0 
                 </td>
                 <td>
                     <a id="Report_@item.Id;" href="@Url.Action("ViewReport","Report",new {id = @item.Id , Width = 100, Height = 650 })">@item.name</a>
+                    <!--<a id="Report_@item.Id;" href="@Url.Action("ViewCustomReport","Report",new {id = @item.Id , Width = 100, Height = 650 })">@item.name</a>-->
                 </td>
                 <td>
                     <label class="control-label">@item.description</label>

@@ -8,7 +8,8 @@
 <h2>Report User List</h2>
 
 <p>
-    @Html.ActionLink("Add User Reports", "Create")
+    @Html.ActionLink("Add User Reports", "Create") |
+    @Html.ActionLink("Copy User Reports", "Copy")
 </p>
 
 @using (Html.BeginForm())
@@ -16,7 +17,7 @@
     <table class="table">
         <tr>
             <td align="left"><label class="control-label">Filter by User name:</label></td>
-            <td align="left">@Html.TextBox("SearchFilter", (string)ViewBag.CurrentFilter, new { @class = "form-control" })</td>
+            <td align="left">@Html.DropDownList("SearchFilter", Model.lsUser, "<-Select User->", htmlAttributes: new { @class = "form-control" })</td>
         </tr>
         <tr>
             <td colspan="2" align="right"><input type="submit" value="Search" class="btn btn-primary" /></td>
@@ -39,25 +40,31 @@ Page @(Model.lsReportUsers.PageCount < Model.lsReportUsers.PageNumber ? 0 : Mode
         <th>
             @Html.DisplayNameFor(model => model.reportUser.isActive)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reportUser.Views)
+        </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model.lsReportUsers)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.username)
-            </td>
-            <td>
-                @Model.lsReports.FirstOrDefault(rt => rt.Value == item.ReportID.ToString()).Text.ToString()
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isActive)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Model.lsReports.FirstOrDefault(rt => rt.Value == item.ReportID.ToString()).Text.ToString()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Views)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
     }
 
 </table>

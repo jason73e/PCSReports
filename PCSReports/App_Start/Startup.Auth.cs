@@ -25,7 +25,7 @@ namespace PCSReports
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 CookieHttpOnly = true,
-                CookieSecure=CookieSecureOption.Always,
+                CookieSecure=CookieSecureOption.Never,
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {

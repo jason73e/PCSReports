@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace PCSReports.Reports
 {
-    public partial class ReportTemplate : System.Web.UI.Page
+    public partial class ReportCustomTemplate : System.Web.UI.Page
     {
         [OutputCache(NoStore = true, Duration = 0)]
         protected void Page_Load(object sender, EventArgs e)
@@ -53,25 +53,6 @@ namespace PCSReports.Reports
                 Response.Redirect("~/Account/Login");
             }
 
-        }
-
-        protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-            DatePickers.Value = string.Join(",", (new List<string>(GetDateParameters()).ToArray()));
-        }
-        private IList<string> GetDateParameters()
-        {
-            List<string> lsrv = new List<string>();
-            // I'm assuming report view control id as reportViewer
-            foreach (ReportParameterInfo info in rvSiteMapping.ServerReport.GetParameters())
-            {
-                if (info.DataType == ParameterDataType.DateTime)
-                {
-                    lsrv.Add(string.Format("[{0}]", info.Prompt));
-                }
-            }
-            return lsrv;
         }
 
     }

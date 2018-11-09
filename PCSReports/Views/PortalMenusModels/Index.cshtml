@@ -1,41 +1,41 @@
-﻿@model IEnumerable<PCSReports.Models.PortalMenusModel>
+﻿@model  PCSReports.Models.PortalMenuViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Menu Manager";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Menu", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.MenuName)
+            @Html.DisplayNameFor(model => model.menusModel.MenuName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ControllerName)
+            @Html.DisplayNameFor(model => model.menusModel.ControllerName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ActionName)
+            @Html.DisplayNameFor(model => model.menusModel.ActionName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MenuType)
+            @Html.DisplayNameFor(model => model.menusModel.MenuType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ParentID)
+            @Html.DisplayNameFor(model => model.menusModel.ParentID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Sortorder)
+            @Html.DisplayNameFor(model => model.menusModel.Sortorder)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RoleName)
+            @Html.DisplayNameFor(model => model.menusModel.RoleName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.lsMenus) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.MenuName)
@@ -50,7 +50,7 @@
             @Html.DisplayFor(modelItem => item.MenuType)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ParentID)
+            @Html.DisplayFor(modelItem => Model.slParentMenus.Where(x=> x.Value==item.ParentID.ToString()).Single().Text)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Sortorder)
@@ -60,7 +60,6 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>
