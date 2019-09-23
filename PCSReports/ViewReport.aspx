@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="Content/public/css/reset.css" type="text/css" />
     <link rel="stylesheet" href="Content/public/css/default.css" type="text/css" />
     <link rel="stylesheet" href="Content/public/css/style.css" type="text/css" />
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="Content/public/javascript/zebra_datepicker.js"></script>
     <script type="text/javascript" src="Content/public/javascript/core.js"></script>
     <script type="text/javascript" src="Content/public/javascript/AddDatePicker.js"></script>

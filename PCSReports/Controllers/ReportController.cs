@@ -18,6 +18,7 @@ namespace PCSReports.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Index(string currentFilter, string SearchFilter, int? page)
         {
+            Utility.ResetViews();
             if (SearchFilter != null)
             {
                 page = 1;

@@ -1,10 +1,18 @@
 ﻿
 @model PCSReports.Models.ReportViewModel
+<head>
+    <script>
+  function resizeIframe(obj) {
+      obj.style.height = (obj.contentWindow.document.body.scrollHeight + 15) + 'px';
+      obj.style.width = (obj.contentWindow.document.body.scrollWidth + 15) + 'px';
+  }
+    </script>
+</head>
 <H1>
     @Model.rm.name
 </H1>
 
-<iframe id="frmReport" src="@Model.ReportURL" frameborder="0" style="@String.Format("width:{0}%; height: {1}px;", Model.Width, Model.Height)" scrolling="auto"></iframe>
+<iframe id="frmReport" src="@Model.ReportURL" frameborder="0" style="@String.Format("width:{0}%; height: {1}px;", Model.Width, Model.Height)" scrolling="auto" onload="resizeIframe(this)"></iframe>
 
 <div>
     @Html.ActionLink("Back to List", "Index")

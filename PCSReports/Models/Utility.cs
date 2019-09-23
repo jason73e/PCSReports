@@ -117,7 +117,7 @@ namespace PCSReports.Models
         public static List<ReportModel> GetCommonReportListForUser(string Username)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).OrderBy(x => x.name).ToList();
+            List<ReportModel> reports = db.ReportModels.Where(x => x.isActive == true).OrderByDescending(x => x.name).ToList();
             List<ReportModel> UserReports = new List<ReportModel>();
             List<ReportUserModel> lsReportsforUser = db.ReportUserModels.Where(x => x.username == Username && x.isActive == true).ToList();
             int iAverageViews = 0;
@@ -154,6 +154,12 @@ namespace PCSReports.Models
             
         }
 
+        public static void ResetViews()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string sql = "update rm set Views = 0 from ReportUserModels rm join(select username, replace(replace(URLAccessed, '/PCSReports/Report/ViewReport/', ''), '?Width=100&Height=650', '')[report], max(TimeAccessed)[lastrun] from AuditLogs where URLAccessed like '/PCSReports/Report/ViewReport/%' and ISNUMERIC(replace(replace(URLAccessed, '/PCSReports/Report/ViewReport/', ''), '?Width=100&Height=650', '')) = 1 group by UserName, replace(replace(URLAccessed, '/PCSReports/Report/ViewReport/', ''), '?Width=100&Height=650', '') ) v on rm.username = v.username and rm.reportid = v.report where views> 0 and lastrun<getdate()-60";
+            db.Database.ExecuteSqlCommand(sql);
+        }
         public static IList<SelectListItem> GetRoles()
         {
             ApplicationDbContext db = new ApplicationDbContext();
